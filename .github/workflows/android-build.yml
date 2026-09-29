@@ -29,14 +29,15 @@ jobs:
         with:
           packages: ""
 
-      - name: Install Android 17 SDK
-        run: sdkmanager "platforms;android-37" "build-tools;37.0.0" "platform-tools"
+      - name: Install Android 16 SDK
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools"
 
       - name: Extract project
         run: |
           mkdir project
           unzip -q WeixinLu-source-Android17.zip -d project
           chmod +x project/gradlew
+          sed -i "s/compileSdk 37/compileSdk 36/; s/targetSdk 37/targetSdk 36/; s/buildToolsVersion '37.0.0'/buildToolsVersion '36.0.0'/" project/app/build.gradle
 
       - name: Build debug APK
         working-directory: project
@@ -45,7 +46,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: WeixinLu-Android17-debug
+          name: WeixinLu-Android17-style-debug-api36
           path: project/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
