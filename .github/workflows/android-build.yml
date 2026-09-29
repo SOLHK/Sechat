@@ -1,0 +1,49 @@
+name: Build WeixinLu APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/android-build.yml"
+      - "WeixinLu-source-Android17.zip"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 17 SDK
+        run: sdkmanager "platforms;android-37" "build-tools;37.0.0" "platform-tools"
+
+      - name: Extract project
+        run: |
+          mkdir project
+          unzip -q WeixinLu-source-Android17.zip -d project
+          chmod +x project/gradlew
+
+      - name: Build debug APK
+        working-directory: project
+        run: ./gradlew --no-daemon assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: WeixinLu-Android17-debug
+          path: project/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
