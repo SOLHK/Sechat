@@ -1,9 +1,9 @@
 # 微信路
 
-`stra.werecord` · `2.1.2-private` · versionCode 8 · Android SDK 36
+包名 `stra.werecord`。当前源码 **2.1.3-private / versionCode 9**，位于 `WeixinLu-source-Android17.zip`。
 
-完整源码为 `WeixinLu-source-Android17.zip`。使用 JDK 17 解压执行 `./gradlew testDebugUnitTest assembleDebug`。GitHub Actions 对源码运行回归测试并实际编译。
+本版修复搜索自动全量加载造成的内存崩溃：数据库分页搜索、有限消息浏览窗口、按结果加载附近消息。编辑模式关闭时隐藏修改记录及修改入口。Telegram 式气泡、紧凑联系人列表和统一导航；微信当前账户身份信息补充读取。
 
-本版重新设计会话导航、消息记录卡片、统计排版及工作台，修复系统栏对比度和搜索区域拥挤。保留已有聚合统计与缓存、ROOT/SQLCipher 数据库修改路径、编辑模式检查和详细诊断。
+保留统计数据库聚合与缓存、现有数据库写入和删除路径。完整源码含原项目版权及依赖许可。GitHub Actions 使用 JDK 17、Android API 36 实际测试和编译，每次均从本提交源码生成 APK；签名密钥不上传仓库。
 
-Actions 原始 APK 使用临时签名；交付 APK 在本地沿用既有密钥。真机数据库操作仍需设备验证。
+真机数据库读写、微信头像、账户备用信息及大量消息搜索速度仍需设备验证。
