@@ -1,30 +1,9 @@
-# 微信路（WeixinLu）
+# 微信路
 
-这是基于 Android/Kotlin 的个人重制工程，包名为 `stra.werecord`。工程包含源码、Gradle Wrapper、资源和构建说明。
+包名 `stra.werecord`，当前源码 `2.1.1-private` / versionCode 7，Android 16 / SDK 36。
 
-## 获取源码
+完整工程保存在 `WeixinLu-source-Android17.zip`。解压后使用 JDK 17 执行 `./gradlew testDebugUnitTest assembleDebug`。GitHub Actions 对推送的完整源码运行回归测试并重新编译 APK；下载的 Actions APK 使用 runner 临时签名，交付包在本地沿用既有密钥签名。
 
-下载仓库内的 [微信路源码包](./WeixinLu-source-Android17.zip)，解压后使用 Android Studio 打开项目根目录。
+保留 Material 3 界面、直接初始化入口、数据库聚合与统计缓存、数据库编辑和删除路径。查看模式隐藏修改入口，异常保留堆栈和复制功能。应用内项目链接指向本仓库。
 
-## 当前状态
-
-- Android compileSdk / targetSdk 37，minSdk 24
-- Kotlin + Java，首页采用 Material 3
-- ROOT 独立应用；当前没有集成 LSPosed/Xposed Hook
-- 本地消息读取、编辑、删除和数据库写回路径仍在代码中
-- 聊天备份记录改为按需加载
-- 崩溃日志通过系统分享菜单由用户自行选择接收方
-
-## 构建
-
-工程要求 JDK 17 和 Android SDK Platform 37。执行：
-
-```sh
-./gradlew assembleDebug
-```
-
-目前没有在本次源代码更新后生成新的 APK。微信兼容性和真机运行尚未验证。
-
-## 许可与来源
-
-原始工程来源、修改记录和第三方组件信息见 `SOURCE_NOTES.md`、`UPSTREAM_README.md` 和 `THIRD_PARTY_NOTICES.md`。本仓库持有者已确认获得发布许可。
+设备上的 ROOT/SQLCipher 操作、微信 8.0.72 和 43 万条消息性能仍需真机验证。构建报告位于源码包内。

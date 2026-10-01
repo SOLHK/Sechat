@@ -17,36 +17,39 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
-
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
           packages: ""
-
       - name: Install Android 16 SDK
         run: sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools"
-
       - name: Extract project
         run: |
           mkdir project
           unzip -q WeixinLu-source-Android17.zip -d project
           chmod +x project/gradlew
-          sed -i "s/compileSdk 37/compileSdk 36/; s/targetSdk 37/targetSdk 36/; s/buildToolsVersion '37.0.0'/buildToolsVersion '36.0.0'/" project/app/build.gradle
-
-      - name: Build debug APK
+      - name: Test and compile fresh APK
         working-directory: project
-        run: ./gradlew --no-daemon assembleDebug
-
+        run: ./gradlew --no-daemon --max-workers=2 testDebugUnitTest assembleDebug
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: WeixinLu-Android17-style-debug-api36
+          name: WeixinLu-2.1.1-fresh-build-api36
           path: project/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+          retention-days: 30
+      - name: Upload test results and UI renders
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: WeixinLu-2.1.1-validation
+          path: |
+            project/app/build/test-results/
+            project/app/build/reports/tests/
+            project/qa/
           retention-days: 30
