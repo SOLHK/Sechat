@@ -39,7 +39,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: WeixinLu-2.1.4-fresh-build-api36
+          name: WeixinLu-2.1.5-fresh-build-api36
           path: project/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
@@ -47,7 +47,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: WeixinLu-2.1.4-validation
+          name: WeixinLu-2.1.5-validation
           path: |
             project/app/build/test-results/
             project/app/build/reports/tests/
